@@ -130,7 +130,8 @@ defmodule MapToXml do
     if Enum.member?(keys, "#content") do
       attributes =
         for key <- keys, String.slice(key, 0, 1) == "-", into: %{} do
-          {String.slice(key, 1..-1), map[key]}
+          last_char_pos = max(String.length(key) - 1, 0)
+          {String.slice(key, 1, last_char_pos), map[key]}
         end
 
       build_tag(key, map["#content"], attributes)
